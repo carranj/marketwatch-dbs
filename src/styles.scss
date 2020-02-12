@@ -1,0 +1,36 @@
+body{
+    margin: 0;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
+    background-color: #fff;
+}
+header{
+    display: block;
+    width:100%;
+    background:#000;
+    color:#fff;
+}
+nav{
+    ul{
+        li{
+            display: inline-block;
+            a{
+                padding: 5px 8px;
+                text-decoration: none;
+            }
+            
+        }
+    }
+    
+}
+.container-fluid{
+    line-height: 24px;
+}
+footer{
+    background :#000;
+    color:#fff;
+}
