@@ -14,15 +14,15 @@ exports.findAllSets = (req, res) => {
 
 // Find a single Set with a group_id
 exports.findOneSet = (req, res) => {
-  Set.findSetById(req.params.group_id, (err, data) => {
+  Set.findSetById(req.params.setId, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Not found Set with id ${req.params.group_id}.`
+          message: `Not found Set with id ${req.params.setId}.`
         });
       } else {
         res.status(500).send({
-          message: "Error retrieving Set with id " + req.params.group_id
+          message: "Error retrieving Set with id " + req.params.setId
         });
       }
     } else res.send(data);
