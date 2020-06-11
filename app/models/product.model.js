@@ -26,7 +26,7 @@ const Product = function(product) {
 };
 
 Product.findProductById = (productId, result) => {
-  sql.query(`SELECT * FROM products WHERE product_id = ${productId}`, (err, res) => {
+  sql.query(`call select_product_data(${productId})`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -34,7 +34,24 @@ Product.findProductById = (productId, result) => {
     }
 
     if (res.length) {
-      console.log("found set: ", res[0]);
+      result(null, res[0]);
+      return;
+    }
+
+    // not found Set with the id
+    result({ kind: "not_found" }, null);
+  });
+};
+
+Product.findArchivedPriceForProduct = (productId, result) => {
+  sql.query(`call get_archive_product_pricing(${productId})`, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+
+    if (res.length) {
       result(null, res[0]);
       return;
     }
@@ -55,7 +72,6 @@ Product.getAllProducts = result => {
   });
 };
 Product.findProductsBySet = (groupId, result) => {
-  console.log(groupId);
   sql.query(`call get_all_products_by_set(${groupId})` , (err, res) => {
     if (err) {
       console.log("error: ", err);

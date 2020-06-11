@@ -6,6 +6,9 @@ module.exports = app => {
     // Retrieve a single product with productId
     app.get("/products/:productId", sets.findOneProduct);
 
+    // Retrieve a single product with productId
+    app.get("/products/archive/:productId", sets.findArchivedPriceForProduct);
+
     // Retrieve a single Set with setId
     app.get("/products/sets/:setId", sets.findProductsBySet);
 };

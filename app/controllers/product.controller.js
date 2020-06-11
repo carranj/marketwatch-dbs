@@ -12,9 +12,26 @@ exports.findAllProducts = (req, res) => {
   });
 };
 
-// Find a single Set with a group_id
+// Find a single product with a product_id
 exports.findOneProduct = (req, res) => {
   Product.findProductById(req.params.productId, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Not found Product with id ${req.params.productId}.`
+        });
+      } else {
+        res.status(500).send({
+          message: `Error retrieving Product with id  ${req.params.productId}`
+        });
+      }
+    } else res.send(data);
+  });
+};
+
+// Find archived pricing for individual product
+exports.findArchivedPriceForProduct = (req, res) => {
+  Product.findArchivedPriceForProduct(req.params.productId, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({

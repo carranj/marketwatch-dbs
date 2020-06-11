@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 
 class IndividualSet extends Component {
   groupId = this.props.match.params.id;
@@ -32,7 +33,7 @@ class IndividualSet extends Component {
           <div>
             <div className="row">
               <div className="col-md-6">
-                {val.clean_name}
+                <Link to={{pathname:`/products/${val.product_id}`}}>{val.clean_name}</Link>
               </div>
               <div className="col-md-3">
                 ${val.low_price}

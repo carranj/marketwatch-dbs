@@ -7,6 +7,7 @@ import Footer from "./components/footerComponent/footer";
 import HomePage from "./components/pages/homepage";
 import Marketwatch from "./components/pages/market-watch";
 import IndividualSet from "./components/pages/individual-set";
+import IndividualProduct from "./components/pages/individual-product";
 
 //includes
 import './App.css';
@@ -23,6 +24,7 @@ class App extends Component {
           <Route exact path='/' component={HomePage}/>
           <Route exact path='/marketwatch' component={Marketwatch}/>
           <Route exact path='/sets/:id' component={IndividualSet}/>
+          <Route exact path='/products/:id' component={IndividualProduct}/>
         </div>
       </Router>
     );
