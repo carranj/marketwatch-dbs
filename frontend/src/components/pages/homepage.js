@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 
 class Homepage extends Component {
-
-    constructor () {
-        super()
+  state = {
+    sets: []
+  }
+    componentDidMount() {
+      fetch("http://localhost:3000/sets")
+      .then((response) => response.json())
+      .then(res => {
+          this.setState({ 
+            sets: res
+          });
+      });
     }
-
 
   render() { 
     return (  
@@ -20,10 +26,14 @@ class Homepage extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Universal Onslaught</td>
-                        <td>February 14, 2020</td>
+                  {this.state.sets.map( (val) => (
+                    <tr key = {val.group_id}>
+                      <td>{val.set_name}</td>
+                      <td>{val.release_date}</td>
                     </tr>
+                    
+                  ))}
+                
                 </tbody>
             </table>
             
