@@ -54,5 +54,16 @@ Product.getAllProducts = result => {
     result(null, res);
   });
 };
+Product.findProductsBySet = (groupId, result) => {
+  console.log(groupId);
+  sql.query(`call get_all_products_by_set(${groupId})` , (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+    result(null, res[0]);
+  });
+}
 
 module.exports = Product;
