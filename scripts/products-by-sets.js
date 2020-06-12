@@ -2,7 +2,7 @@ const { curly, Curl } = require('node-libcurl');
 const apiConfig = require("./config");
 const bearerConfig = require("./config/bearerToken");
 
-bearerToken =  getBearerToken();
+const bearerToken =  bearerConfig.getBearerToken();
 console.log(bearerToken);
 const publicKey = apiConfig.TCG_PUBLIC_KEY;
 const privateKey = apiConfig.TCG_PRIVATE_KEY;

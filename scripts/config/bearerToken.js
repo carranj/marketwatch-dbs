@@ -10,22 +10,27 @@ function printError(error){
     console.error(error.message);
 }
 
-getBearerToken = function() {
-    axios({
-        "method": "POST",
-        "url": tokenURL,
-        "headers": {
-            "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
-        },
-        "data": `grant_type=client_credentials&client_id=${publicKey}&client_secret=${privateKey}`
-    })
-    .then(function (response) {
+async function getBearerToken() {
+    try{
+        const response = await axios({
+            "method": "POST",
+            "url": tokenURL,
+            "headers": {
+                "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
+            },
+            "data": `grant_type=client_credentials&client_id=${publicKey}&client_secret=${privateKey}`
+        })
+        
         accessToken = response.data.access_token;
-    })
-    .catch(function (error) {
-        // handle error
-        printError(error);
-    })
-}
+        // console.log(accessToken);
+        return accessToken;
+
+    } catch (err){
+        printError(err);
+    }
+};
+
 
 getBearerToken();
+
+module.exports.getBearerToken = getBearerToken;
