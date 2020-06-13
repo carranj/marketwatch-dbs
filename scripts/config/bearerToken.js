@@ -4,6 +4,7 @@ const apiConfig = require(".");
 const publicKey = apiConfig.TCG_PUBLIC_KEY;
 const privateKey = apiConfig.TCG_PRIVATE_KEY;
 const tokenURL = "https://api.tcgplayer.com/token";
+const authData = `grant_type=client_credentials&client_id=${publicKey}&client_secret=${privateKey}`
 
 //Print Error Messages
 function printError(error){
@@ -12,24 +13,15 @@ function printError(error){
 
 async function getBearerToken() {
     try{
-        const response = await axios({
-            "method": "POST",
-            "url": tokenURL,
-            "headers": {
-                "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
-            },
-            "data": `grant_type=client_credentials&client_id=${publicKey}&client_secret=${privateKey}`
-        })
-        
-        accessToken = response.data.access_token;
-        // console.log(accessToken);
-        return accessToken;
-
+        const response = await axios.post(tokenURL, authData, {
+                                        headers:{'Content-Type' : 'text/plain' }
+                                    })
+        const accessToken = await response.data.access_token;
+        return await accessToken;
     } catch (err){
         printError(err);
     }
 };
-
 
 getBearerToken();
 
