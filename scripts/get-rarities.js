@@ -1,10 +1,9 @@
 const axios = require("axios"); 
-const apiConfig = require("./config");
+const mysql = require("mysql");
+const sql = require("../app/config/db.config");
 const bearerConfig = require("./config/bearerToken");
-
 const bearerToken =  bearerConfig.getBearerToken().then(data=>{return data});
 const categoryId = 27; //ID for DBS
-const groupId = 2590; //Universal Onslaught Test
 const listAllCategoryRaritiesUrl = `http://api.tcgplayer.com/v1.32.0/catalog/categories/${categoryId}/rarities`; // Request GET; 
 
 //Print Error Messages
