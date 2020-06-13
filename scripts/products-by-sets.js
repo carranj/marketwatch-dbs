@@ -3,18 +3,9 @@ const apiConfig = require("./config");
 const bearerConfig = require("./config/bearerToken");
 
 const bearerToken =  bearerConfig.getBearerToken().then(data=>{return data});
-const publicKey = apiConfig.TCG_PUBLIC_KEY;
-const privateKey = apiConfig.TCG_PRIVATE_KEY;
-
-const headers = {accept: 'application/json'}
-// ["Accept: application/json",  `Authorization: bearer ${bearerToken}`];
-
-
 const categoryId = 27; //ID for DBS
 const groupId = 2590; //Universal Onslaught Test
-const catalogdata = "https://api.tcgplayer.com/v1.39.0/catalog/categories"
 const listAllCategoryRaritiesUrl = `http://api.tcgplayer.com/v1.32.0/catalog/products?categoryId=${categoryId}&groupId=${groupId}&limit=10000`; // Request Get
-
 
 //Print Error Messages
 function printError(error){
