@@ -57,7 +57,7 @@ function writeDataToDb(results) {
   let comboEnergy = null;
   let era = null;
   let character = null;
-  // console.log(results);
+
   results.forEach(element => {
     productId = element.productId;
     productName= element.name;
