@@ -4,9 +4,10 @@ const sql = require("../app/config/db.config");
 const bearerConfig = require("./config/bearerToken");
 const bearerToken =  bearerConfig.getBearerToken().then(data=>{return data});
 let categoryId = 27; //ID for DBS
-const groupId = 2647;
-const offset = 0;
-const listAllProductsInSet = `http://api.tcgplayer.com/v1.39.0/catalog/products?categoryId=${categoryId}&groupId=${groupId}&getExtendedFields=true&offset=${offset}&limit=250";`
+const groupId = 1962;
+const offset = 99;
+const limit = 100;
+const listAllProductsInSet = `http://api.tcgplayer.com/v1.39.0/catalog/products?categoryId=${categoryId}&groupId=${groupId}`;
 
 var con = mysql.createConnection({
   host: sql.HOST,
@@ -18,19 +19,28 @@ var con = mysql.createConnection({
 //Print Error Messages
 function printError(error){
   console.error(error.message);
+  con.end();
 }
 
-async function getAllProductsInSet(groupId) {
+async function getAllProductsInSet() {
   try{
     const acessToken = await bearerToken;
 
     const response = await axios.get(listAllProductsInSet, {
+      params:{
+        'offset': offset,
+        'limit':limit,
+        'getExtendedFields': 'true'
+
+      },
       headers: {
-				'Authorization': `bearer ${acessToken}`
-			}
+        'accept': 'application/json',
+        'Authorization': `bearer ${acessToken}`
+      }
     })
-    results = response.data.results;
-    return results;
+    results = await response.data.results;
+    console.log(results.length);
+    return await results;
 
   } catch (err){
     printError(err);
@@ -44,7 +54,7 @@ async function getAllProductsInSet(groupId) {
   }
 }
 
-function writeDataToDb(results) {
+async function writeDataToDb(results) {
   let rarity = null;
   let cardNumber = null;
   let description = null;
@@ -58,7 +68,7 @@ function writeDataToDb(results) {
   let era = null;
   let character = null;
 
-  results.forEach(element => {
+  await results.forEach(element => {
     productId = element.productId;
     productName= element.name;
     cleanName = element.cleanName;
@@ -84,7 +94,7 @@ function writeDataToDb(results) {
       extendedItem.name == 'Character' ? character = extendedItem.value:null;
       // console.log({rarity,cardNumber,description,cardType,color,energyColorCost,specialTrait,power,comboPower,comboEnergy,era,character})
     })
-    // console.log({productId,productName,cleanName,imageUrl,gameId,setId,tcgUrl,lastModified,importedPriceDate});
+    console.log({productId,productName,cleanName,imageUrl,gameId,setId,tcgUrl,lastModified,importedPriceDate});
 
     var productInfo = {
       product_id : productId,
@@ -119,4 +129,4 @@ function writeDataToDb(results) {
   con.end();
 }
 
-getAllProductsInSet(groupId);
+getAllProductsInSet();

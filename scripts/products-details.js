@@ -23,9 +23,9 @@ function printError(error){
 async function ProductDetails() {
     try{
         sqlGetIds = 'SELECT product_id FROM products WHERE imported_price IS NULL or imported_price < CURRENT_DATE() and category_id = 27';
-        const getDetails = con.query(sqlGetIds, async function (err, results, fields) {
+        const getDetails = await con.query(sqlGetIds, async function (err, results, fields) {
             if (err) throw err;
-            results.forEach(element => {
+            await results.forEach(element => {
                 getProductDetails(element.product_id);
             })
         });
@@ -37,7 +37,7 @@ async function ProductDetails() {
 }
 
 async function getProductDetails(productId){
-    let requestGetProductDetails = await `http://api.tcgplayer.com/v1.32.0/pricing/product/${productId}`;
+    let requestGetProductDetails = `http://api.tcgplayer.com/v1.32.0/pricing/product/${productId}`;
     const acessToken = await bearerToken;
 
     const response = await axios.get(requestGetProductDetails, {
@@ -89,8 +89,9 @@ async function updateProductImportDate(productId, importedDate){
     let sqlUpdate = `UPDATE products SET imported_price = NOW() WHERE product_id = ${productId}`;
     sqlUpdate = await con.query(sqlUpdate, function (error, results, fields) {
         if (error) throw error;
+        console.log(`updated ${productId} in products table with the date ${importedDate}`);
       })
-    console.log(`updated ${productId} in products table with the date ${importedDate}`);
+    
 }
 
 ProductDetails();

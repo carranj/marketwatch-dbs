@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import Moment from 'react-moment';
+import 'moment-timezone';
+import NumberFormat from 'react-number-format';
 
 class IndividualProduct extends Component {
   productId = this.props.match.params.id;
@@ -27,7 +30,7 @@ class IndividualProduct extends Component {
     })
   }
 
-  render() { 
+  render() {
     return (  
       <div className="container-fluid">
         <h1>{this.product.product_name}</h1>
@@ -57,8 +60,10 @@ class IndividualProduct extends Component {
           this.state.archiveInfo.map( 
             (val) => (
               <div className="row">
-                <div className="col-md-3">{val.low_price}</div>
-                <div className="col-md-3">{val.imported_date}</div>
+                <div className="col-md-3">
+                {val.low_price === null ? val.low_price = "Unavailable" : <NumberFormat value={val.low_price}  fixedDecimalScale={true} decimalScale={2} displayType={'text'} thousandSeparator={true} prefix={'$'} /> }
+                </div>
+                <div className="col-md-3"><Moment format="MM/DD/YYYY">{val.imported_date}</Moment></div>
               </div>
             )
           )

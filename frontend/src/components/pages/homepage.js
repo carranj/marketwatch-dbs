@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import Moment from 'react-moment';
+import 'moment-timezone';
 
 class Homepage extends Component {
   state = {
@@ -30,7 +32,7 @@ class Homepage extends Component {
                   {this.state.sets.map( (val) => (
                     <tr key = {val.group_id}>
                       <td><Link to={{ pathname: `sets/${val.group_id}` }}>{val.set_name}</Link></td>
-                      <td>{val.release_date}</td>
+                      <td><Moment format="MMMM DD, YYYY">{val.release_date}</Moment></td>
                     </tr>
                     
                   ))}
