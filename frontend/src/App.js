@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 // Components
 import Header from "./components/headerComponent/header";
-import Footer from "./components/footerComponent/footer";
 import HomePage from "./components/pages/homepage";
 import Marketwatch from "./components/pages/market-watch";
 import IndividualSet from "./components/pages/individual-set";

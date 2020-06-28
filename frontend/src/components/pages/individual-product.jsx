@@ -36,7 +36,7 @@ class IndividualProduct extends Component {
         <h1>{this.product.product_name}</h1>
         <div className="row">
           <div className="col-md-3">
-            <img src={this.product.image_url} />
+            <img src={this.product.image_url} alt={this.product.productName} />
            </div>
            <div className="col-md-9">
               <p>Last Imported Date: {this.product.imported_price}</p>
