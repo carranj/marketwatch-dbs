@@ -25,19 +25,18 @@ async function ProductDetails() {
         sqlGetIds = 'SELECT product_id FROM products WHERE imported_price IS NULL or imported_price < CURRENT_DATE() and category_id = 27';
         const getDetails = await con.query(sqlGetIds, async function (err, results, fields) {
             if (err) throw err;
-            await results.forEach(element => {
+            results.forEach(element => {
                 getProductDetails(element.product_id);
             })
         });
   } catch(err){
       printError(err);
-  } finally {
-      console.log("connection ended");
   }
 }
 
 async function getProductDetails(productId){
-    let requestGetProductDetails = `http://api.tcgplayer.com/v1.32.0/pricing/product/${productId}`;
+    try{
+        let requestGetProductDetails = `http://api.tcgplayer.com/v1.32.0/pricing/product/${productId}`;
     const acessToken = await bearerToken;
 
     const response = await axios.get(requestGetProductDetails, {
@@ -47,6 +46,12 @@ async function getProductDetails(productId){
     })
     results = await response.data.results[0];
     await writeDataToDb(results);
+    } catch (err){
+        printError(err);
+    } finally{
+        console.log("connection ended");
+    }
+    
 }
 
 async function writeDataToDb(results) {

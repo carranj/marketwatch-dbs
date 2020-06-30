@@ -4,8 +4,8 @@ const sql = require("../app/config/db.config");
 const bearerConfig = require("./config/bearerToken");
 const bearerToken =  bearerConfig.getBearerToken().then(data=>{return data});
 let categoryId = 27; //ID for DBS
-const groupId = 1962;
-const offset = 99;
+const groupId = 2647;
+const offset = 0;
 const limit = 100;
 const listAllProductsInSet = `http://api.tcgplayer.com/v1.39.0/catalog/products?categoryId=${categoryId}&groupId=${groupId}`;
 
