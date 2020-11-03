@@ -17,7 +17,7 @@ async function getBearerToken() {
                                         headers:{'Content-Type' : 'text/plain' }
                                     })
         const accessToken = await response.data.access_token;
-        return await accessToken;
+        return accessToken;
     } catch (err){
         printError(err);
     }

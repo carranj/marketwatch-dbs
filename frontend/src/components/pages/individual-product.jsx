@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 import Moment from 'react-moment';
 import 'moment-timezone';
 import NumberFormat from 'react-number-format';
@@ -33,10 +34,14 @@ class IndividualProduct extends Component {
   render() {
     return (  
       <div className="container-fluid">
+        <Link to={location => `/sets/${this.product.group_id}`}>View all cards in set</Link>
         <h1>{this.product.product_name}</h1>
         <div className="row">
           <div className="col-md-3">
-            <img src={this.product.image_url} alt={this.product.productName} />
+            <a target="_blank" href={this.product.tcg_url}>
+            
+              <img src={this.product.image_url} alt={this.product.productName} />
+            </a>
            </div>
            <div className="col-md-9">
               <p>Last Imported Date: {this.product.imported_price}</p>

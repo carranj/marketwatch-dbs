@@ -4,7 +4,7 @@ const sql = require("../app/config/db.config");
 const bearerConfig = require("./config/bearerToken");
 const bearerToken =  bearerConfig.getBearerToken().then(data=>{return data});
 let categoryId = 27; //ID for DBS
-const groupId = 2647;
+const groupId = 2707;
 const offset = 0;
 const limit = 100;
 const listAllProductsInSet = `http://api.tcgplayer.com/v1.39.0/catalog/products?categoryId=${categoryId}&groupId=${groupId}`;
@@ -27,15 +27,15 @@ async function getAllProductsInSet() {
     const acessToken = await bearerToken;
 
     const response = await axios.get(listAllProductsInSet, {
+      headers: {
+        'accept': 'application/json',
+        'Authorization': `bearer ${acessToken}`
+      },
       params:{
         'offset': offset,
         'limit':limit,
         'getExtendedFields': 'true'
 
-      },
-      headers: {
-        'accept': 'application/json',
-        'Authorization': `bearer ${acessToken}`
       }
     })
     results = await response.data.results;
